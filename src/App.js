@@ -18,7 +18,7 @@ const photoApiKey = apiKey;
 
 
 class App extends Component {
-
+  
   // state = {
   //   photos: []
   // };
@@ -28,6 +28,7 @@ class App extends Component {
     this.state = {
       photos: []
     };
+    console.log(this.state.photos);
   }
 
   componentDidMount() {
@@ -35,7 +36,8 @@ class App extends Component {
       .then(response => response.json())
       .then ( responseData => {
         // this.setState({ photos: responseData.data });
-        this.setState(state => ({...state, photos: state.photos}));
+        this.setState(state => ({...state, photos: state.photos})); //taken from https://ozmoroz.com/2018/11/why-my-setstate-doesnt-work/
+        console.log(this.state.photos);
       })
       .catch(error => {
         console.log('Error fetching and parsing data', error);
@@ -43,7 +45,6 @@ class App extends Component {
   }
 
   render () {
-    console.log(this.state.photos);
     return (
       <BrowserRouter>
         <div className="container">
