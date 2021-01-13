@@ -18,10 +18,6 @@ const photoApiKey = apiKey;
 
 
 class App extends Component {
-  
-  // state = {
-  //   photos: []
-  // };
 
   constructor() {
     super()
@@ -32,10 +28,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${photoApiKey}&tags=beaches%2C+deserts%2C+mountains&per_page=24&page=1&format=json&nojsoncallback=1`)
+    fetch(` https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${photoApiKey}&tags=beaches%2C+deserts%2C+mountains&per_page=24&page=1&format=json&nojsoncallback=1`)
       .then(response => response.json())
       .then (responseData => {
-        this.setState({ photos: responseData }); //works now, but in Guil's demo, he uses responseData.data as the new state, don't understand...
+        this.setState({ photos: responseData.photo }); //works now, but in Guil's demo, he uses responseData.data as the new state, don't understand...
         console.log(this.state.photos);
       })
       .catch(error => {
@@ -47,10 +43,10 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="container">
-            <Route exact path="/" component={Search} />
-            <Route exact path="/" component={Navigation} />
-            <Route exact path="/" component={Gallery} />
-            <Route path="/search" component={Search} />
+            <Search />
+            <Navigation />
+            <Gallery data={this.state.photos }/>
+            <Search />
           <Switch>
             <Route path="/beaches" component={Gallery} />
             <Route path="/deserts" component={Gallery} />
