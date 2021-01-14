@@ -31,7 +31,7 @@ class App extends Component {
     fetch(` https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${photoApiKey}&tags=beaches%2C+deserts%2C+mountains&per_page=24&page=1&format=json&nojsoncallback=1`)
       .then(response => response.json())
       .then (responseData => {
-        this.setState({ photos: responseData.photo }); //works now, but in Guil's demo, he uses responseData.data as the new state, don't understand...
+        this.setState({ photos: responseData }); //works now, but in Guil's demo, he uses responseData.data as the new state, don't understand...
         console.log(this.state.photos);
       })
       .catch(error => {
