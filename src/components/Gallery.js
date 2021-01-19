@@ -8,7 +8,7 @@ const Gallery = (props) => {
     const results = props.data;
 
     let photos = results.map(photo => 
-        <Photo url={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_m.jpg`} />
+        <Photo url={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_m.jpg`} key={photo.id} />
     );
 
     return (

@@ -28,11 +28,23 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch(` https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${photoApiKey}&tags=beaches%2C+deserts%2C+mountains&per_page=24&page=1&format=json&nojsoncallback=1`)
+    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${photoApiKey}&tags=rocks%2C+papers%2C+scissors&accuracy=&is_getty=&per_page=24&page=1&format=json&nojsoncallback=1`)
       .then(response => response.json())
       .then (responseData => {
-        this.setState({ photos: responseData }); //works now, but in Guil's demo, he uses responseData.data as the new state, don't understand...
-        console.log(this.state.photos);
+        this.setState({ photos: responseData.photos.photo });
+        console.log(responseData.photos.photo);
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing data', error);
+      });
+  }
+
+  performSearch = (query) => {
+    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${photoApiKey}&tags=${query}&accuracy=&is_getty=&per_page=24&page=1&format=json&nojsoncallback=1`)
+      .then(response => response.json())
+      .then (responseData => {
+        this.setState({ photos: responseData.photos.photo });
+        console.log(responseData.photos.photo);
       })
       .catch(error => {
         console.log('Error fetching and parsing data', error);
@@ -43,15 +55,14 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="container">
-            <Search />
+            <Search onSearch={this.performSearch} />
             <Navigation />
-            <Gallery data={this.state.photos }/>
-            <Search />
+            <Gallery data={this.state.photos}/>
           <Switch>
-            <Route path="/beaches" component={Gallery} />
-            <Route path="/deserts" component={Gallery} />
-            <Route path="/mountains" component={Gallery} />
-            <Route component={NotFound} />
+            <Route path="/rock" component={Gallery} />
+            <Route path="/paper" component={Gallery} />
+            <Route path="/scissors" component={Gallery} />
+            {/* <Route component={NotFound} /> */}
           </Switch>
         </div>
       </BrowserRouter>
