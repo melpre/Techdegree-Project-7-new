@@ -15,7 +15,7 @@ class Search extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.onSearch(this.state.searchText);
+    this.props.onSearch(this.query.value);
     event.currentTarget.reset();
   }
 
@@ -25,6 +25,7 @@ class Search extends Component {
         <input type="search"
                onChange={this.onSearchChange} 
                name="search" 
+               ref={(input) => this.query = input}
                placeholder="Search" 
                required/>
         <button type="submit" className="search-button">
