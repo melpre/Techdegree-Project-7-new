@@ -16,6 +16,12 @@ class Search extends Component {
   handleSubmit = event => {
     event.preventDefault();
     this.props.onSearch(this.query.value);
+
+    //Update path/url after submit listener fires
+    let searchTerm = this.query.value;
+    let path = `search/${searchTerm}`;
+    this.props.history.push(path);
+
     event.currentTarget.reset();
   }
 

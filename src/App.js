@@ -21,50 +21,90 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      photos: [],
+      cats: [],
+      dogs: [],
+      fish: [],
+      search: [],
       loading: true
     };
-    console.log(this.state.photos);
-  }
+  };
 
   componentDidMount() {
-    this.performSearch();
-  }
+    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${photoApiKey}&tags=cats&accuracy=&is_getty=&per_page=24&page=1&format=json&nojsoncallback=1`)
+      .then(response => response.json())
+      .then (responseData => {
+        this.setState({
+          cats: responseData.photos.photo,
+          loading: false
+        });
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing data', error);
+      });
 
-  performSearch = (query = 'cats,%20dogs,%20fish') => {
+    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${photoApiKey}&tags=dogs&accuracy=&is_getty=&per_page=24&page=1&format=json&nojsoncallback=1`)
+      .then(response => response.json())
+      .then (responseData => {
+        this.setState({
+          dogs: responseData.photos.photo,
+          loading: false
+        });
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing data', error);
+    });
+
+    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${photoApiKey}&tags=fish&accuracy=&is_getty=&per_page=24&page=1&format=json&nojsoncallback=1`)
+      .then(response => response.json())
+      .then (responseData => {
+        this.setState({
+          fish: responseData.photos.photo,
+          loading: false
+        });
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing data', error);
+    });
+  };
+
+
+  performSearch = (query) => {
     fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${photoApiKey}&tags=${query}&accuracy=&is_getty=&per_page=24&page=1&format=json&nojsoncallback=1`)
       .then(response => response.json())
       .then (responseData => {
-        this.setState({ 
-          photos: responseData.photos.photo,
-          loading: false 
+        this.setState({
+          search: responseData.photos.photo,
+          loading: false
         });
         console.log(responseData.photos.photo);
       })
       .catch(error => {
         console.log('Error fetching and parsing data', error);
       });
-  }
+  };
 
   render () {
     return (
       <BrowserRouter>
 
         <div className="container">
+
+          {/* onSearch prop called in Search.js, does not update and display data! */}
           <Search onSearch={this.performSearch} />
+
           <Navigation />
-          <Route exact path='/'>
-              { (this.state.loading)
-                ? <p>Loading...</p>
-                : <Gallery data={this.state.photos} />
-              }
-          </Route>
 
           <Switch>
-            {/* Need to figure out how to render Gallery component to filter each topic */}
-            {/* <Route path="/cats" render={ () => <Gallery data={} /> } /> */}
-            {/* <Route path="/dogs" render={ () => <Gallery data={} /> } /> */}
-            {/* <Route path="/fish" render={ () => <Gallery data={} /> } /> */}
+            <Route exact path='/'>
+                { (this.state.loading)
+                  ? <p>Loading...</p>
+                  : <Gallery data={this.state.cats} />
+                }
+            </Route>
+            <Route path="/cats" render={ () => <Gallery data={this.state.cats} /> } />
+            <Route path="/dogs" render={ () => <Gallery data={this.state.dogs} /> } />
+            <Route path="/fish" render={ () => <Gallery data={this.state.fish} /> } />
+            <Route path="/search/:query" render={ () => <Gallery data={this.state.search} /> } />
           </Switch>
 
         </div>
