@@ -10,6 +10,7 @@ import './index.css';
 import Search from './components/Search';
 import Navigation from './components/Navigation';
 import Gallery from './components/Gallery';
+import PageError from './components/PageError';
 
 //Import Flickr API
 import apiKey from './config';
@@ -89,7 +90,6 @@ class App extends Component {
 
         <div className="container">
 
-          {/* onSearch prop called in Search.js, does not update and display data! */}
           <Search onSearch={this.performSearch} />
 
           <Navigation />
@@ -104,7 +104,13 @@ class App extends Component {
             <Route path="/cats" render={ () => <Gallery data={this.state.cats} /> } />
             <Route path="/dogs" render={ () => <Gallery data={this.state.dogs} /> } />
             <Route path="/fish" render={ () => <Gallery data={this.state.fish} /> } />
-            <Route path="/search/:query" render={ () => <Gallery data={this.state.search} /> } />
+            <Route exact path='/search/:query'>
+                { (this.state.loading)
+                  ? <p>Loading...</p>
+                  : <Gallery data={this.state.search} />
+                }
+            </Route>
+            <Route component={PageError} />
           </Switch>
 
         </div>

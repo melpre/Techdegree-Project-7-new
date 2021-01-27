@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 class Search extends Component {
 
@@ -15,6 +16,7 @@ class Search extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    
     this.props.onSearch(this.query.value);
 
     //Update path/url after submit listener fires
@@ -45,4 +47,4 @@ class Search extends Component {
   }
 };
 
-export default Search;
+export default withRouter(Search);

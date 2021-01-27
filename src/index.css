@@ -1,6 +1,10 @@
+/* CSS changes: 
+Line 7, 34, 59, 68, 84
+*/
+
 body {
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Helvetica', sans-serif; /*  CHANGED  */
   color: #3f4850;
 }
 
@@ -27,7 +31,7 @@ a {
 
 .search-form button {
   outline: none;
-  background-color: #438bbd;
+  background-color: mediumseagreen; /*  CHANGED  */
   border: none;
   padding: 0px 15px;
   border-radius: 0 0.35em 0.35em 0;
@@ -52,7 +56,7 @@ input {
 
 .main-nav a {
   display: block;
-  background: #438bbd;
+  background: mediumseagreen; /*  CHANGED  */
   border-radius: 3px;
   padding: 5px;
   color: #fff;
@@ -61,7 +65,7 @@ input {
 .main-nav .active,
 .main-nav a:hover,
 .search-form button:hover {
-  background-color: #275270;
+  background-color: seagreen; /*  CHANGED  */
 }
 
 .photo-container ul {
@@ -77,6 +81,7 @@ input {
   height: 165px;
   overflow: hidden;
   margin-bottom: 15px;
+  border-radius: 3% /*  ADDED  */
 }
 
 .photo-container ul img {
