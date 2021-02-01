@@ -26,6 +26,14 @@ class Search extends Component {
     event.currentTarget.reset();
   }
 
+  componentDidUpdate = (prevProps) => {
+    const previous = prevProps.location.pathname;
+    const current = this.props.location.pathname;
+    if (current.includes('search') && previous === current) {
+      this.props.onSearch(current.slice( current.lastIndexOf('/') ))
+    };
+  };
+
   render() {
     return (
       <form className="search-form" onSubmit={this.handleSubmit}>
