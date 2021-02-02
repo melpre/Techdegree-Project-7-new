@@ -29,7 +29,7 @@ class Search extends Component {
   componentDidUpdate = (prevProps) => {
     const previous = prevProps.location.pathname;
     const current = this.props.location.pathname;
-    if (current.includes('search') && previous === current) {
+    if (current.includes('search') && previous !== current) {
       this.props.onSearch(current.slice( current.lastIndexOf('/') ))
     };
   };

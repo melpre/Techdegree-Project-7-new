@@ -25,8 +25,11 @@ class App extends Component {
       cats: [],
       dogs: [],
       fish: [],
-      search: [],
-      loading: true
+      loading: true,
+      search: {
+        list: [],
+        loading: true
+      }
     };
   };
 
@@ -68,14 +71,15 @@ class App extends Component {
     });
   };
 
-
   performSearch = (query) => {
     fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${photoApiKey}&tags=${query}&accuracy=&is_getty=&per_page=24&page=1&format=json&nojsoncallback=1`)
       .then(response => response.json())
       .then (responseData => {
         this.setState({
-          search: responseData.photos.photo,
-          loading: false
+          search : {
+            list: responseData.photos.photo,
+            loading: false
+          }
         });
         console.log(responseData.photos.photo);
       })
@@ -101,15 +105,15 @@ class App extends Component {
                   : <Gallery data={this.state.cats} />
                 }
             </Route>
-            <Route path="/cats" render={ () => <Gallery data={this.state.cats} /> } />
-            <Route path="/dogs" render={ () => <Gallery data={this.state.dogs} /> } />
-            <Route path="/fish" render={ () => <Gallery data={this.state.fish} /> } />
             <Route exact path='/search/:query'>
                 { (this.state.loading)
                   ? <p>Loading...</p>
-                  : <Gallery data={this.state.search} />
+                  : <Gallery data={this.state.search.list} />
                 }
             </Route>
+            <Route path="/cats" render={ () => <Gallery data={this.state.cats} /> } />
+            <Route path="/dogs" render={ () => <Gallery data={this.state.dogs} /> } />
+            <Route path="/fish" render={ () => <Gallery data={this.state.fish} /> } />
             <Route component={PageError} />
           </Switch>
 
