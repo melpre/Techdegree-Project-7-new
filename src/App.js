@@ -1,3 +1,4 @@
+//Import React libraries and style sheet
 import React, { Component } from 'react';
 import {
   BrowserRouter,
@@ -17,6 +18,7 @@ import apiKey from './config';
 const photoApiKey = apiKey;
 
 
+//Container Component: fetches data then renders components passing in data
 class App extends Component {
 
   constructor() {
@@ -68,8 +70,8 @@ class App extends Component {
     });
   };
 
+
   performSearch = (query) => {
-    // Set 'loading' prop to 'true'
     this.setState({
       loading: true
     });
@@ -80,7 +82,6 @@ class App extends Component {
           search: responseData.photos.photo,
           loading: false
         });
-        console.log(responseData.photos.photo);
       })
       .catch(error => {
         console.log('Error fetching and parsing data', error);

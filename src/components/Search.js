@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
+//Stateful Search Component: sets 'search' input value and handles submit event. Passes state back to App.js 
 class Search extends Component {
 
+  //Initialize internal state
   constructor() {
     super()
     this.state = {
@@ -10,6 +12,7 @@ class Search extends Component {
     };
   }
 
+  //Set state's search value
   onSearchChange = event => {
     this.setState({ searchText: event.target.value });
   }
@@ -18,7 +21,7 @@ class Search extends Component {
     event.preventDefault();
     this.props.onSearch(this.query.value);
 
-    //Update path/url after submit listener fires
+    //Update path/url & history stack after submit listener fires 
     let searchTerm = this.query.value;
     let path = `/search/${searchTerm}`;
     this.props.history.push(path);
@@ -26,6 +29,7 @@ class Search extends Component {
     event.currentTarget.reset();
   }
 
+  //When component is updated with new state, display corresponding data
   componentDidUpdate = (prevProps) => {
     const previous = prevProps.location.pathname;
     const current = this.props.location.pathname;

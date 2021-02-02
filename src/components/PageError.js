@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const PageError = () => {
     return (
         <div className="not-found">
