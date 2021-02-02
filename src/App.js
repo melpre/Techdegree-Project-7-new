@@ -25,11 +25,8 @@ class App extends Component {
       cats: [],
       dogs: [],
       fish: [],
-      loading: true,
-      search: {
-        list: [],
-        loading: true
-      }
+      search: [],
+      loading: true
     };
   };
 
@@ -72,14 +69,16 @@ class App extends Component {
   };
 
   performSearch = (query) => {
+    // Set 'loading' prop to 'true'
+    this.setState({
+      loading: true
+    });
     fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${photoApiKey}&tags=${query}&accuracy=&is_getty=&per_page=24&page=1&format=json&nojsoncallback=1`)
       .then(response => response.json())
       .then (responseData => {
         this.setState({
-          search : {
-            list: responseData.photos.photo,
-            loading: false
-          }
+          search: responseData.photos.photo,
+          loading: false
         });
         console.log(responseData.photos.photo);
       })
@@ -108,7 +107,7 @@ class App extends Component {
             <Route exact path='/search/:query'>
                 { (this.state.loading)
                   ? <p>Loading...</p>
-                  : <Gallery data={this.state.search.list} />
+                  : <Gallery data={this.state.search} />
                 }
             </Route>
             <Route path="/cats" render={ () => <Gallery data={this.state.cats} /> } />
