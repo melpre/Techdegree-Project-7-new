@@ -1,3 +1,10 @@
+/******************************************
+Treehouse FSJS Techdegree:
+project 7 - Image Gallery App using React
+by Melissa Preece
+I am aiming for the grade Exceeds Expectations but will accept Meets Expectations as well.
+******************************************/
+
 //Import React libraries and style sheet
 import React, { Component } from 'react';
 import {
